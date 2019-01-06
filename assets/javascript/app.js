@@ -1,5 +1,6 @@
 //Initialize Variables
-var topics = ["birds", "cats", "dogs", "hedgehogs", "narwhals", "snakes"];
+var topics = ["birds", "cats", "dogs", "hedgehogs", "narwhals", "snakes", "lions", "pikachu", "monster", "taco", "nachos", 
+            "sunshine", "skiing", "music", "dance", "waterfall"];
 
 
 $(document).ready(function () {
@@ -19,7 +20,6 @@ $(document).ready(function () {
     $("#add-gif").on("click", function (event) {
 
         event.preventDefault();
-        // This line grabs the input from the textbox
         var gif = $("#gif-input").val().trim();
         // Adding subject from the textbox to our array
         topics.push(gif);
@@ -31,7 +31,7 @@ $(document).ready(function () {
 
         var gifName = $(this).attr("data-name");
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-            gifName + "&api_key=k7CBQf6b6cm7pL4RJkBQlizNk5kPP0Px&limit=1";
+            gifName + "&api_key=k7CBQf6b6cm7pL4RJkBQlizNk5kPP0Px&limit=10";
 
         $.ajax({
                 url: queryURL,
@@ -49,28 +49,34 @@ $(document).ready(function () {
                     var gifImage = $("<img>");
                     gifImage.attr("src", results[i].images.fixed_height_still.url);
                     console.log(results[i]);
-                    gifImage.attr("class", "gif-state");
+                    gifImage.attr("data-still", results[i].images.fixed_height_still.url);
+                    gifImage.attr("data-animate", results[i].images.fixed_height.url);
+                    gifImage.attr("data-state", "still");
+                    gifImage.attr("class", "image");
                     gifDiv.prepend(p);
                     gifDiv.prepend(gifImage);
                     $("#giphy-area").prepend(gifDiv);
                 }
-            });
-            
-            $(".gif-state").on("click", function() {
-                var state = $(this).attr("data-state");
-                if (state === "still") {
-                    $(this).attr("src", $(this).attr("data-animate"));
-                    $(this).attr("data-state", "animate");
-                  } else {
-                    $(this).attr("src", $(this).attr("data-still"));
-                    $(this).attr("data-state", "still");
-                  }
+
+                $(".image").on("click", function () {
+
+
+                    var state = $(this).attr("data-state");
+                    if (state === "still") {
+                        $(this).attr("src", $(this).attr("data-animate"));
+                        $(this).attr("data-state", "animate");
+                    } else {
+                        $(this).attr("src", $(this).attr("data-still"));
+                        $(this).attr("data-state", "still");
+                    }
                 });
-          
+            });
+
+
+
     };
-    
-    
-    
+
+
     $(document).on("click", ".gif", displayGifs);
 
     renderButtons();
