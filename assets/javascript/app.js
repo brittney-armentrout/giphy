@@ -45,7 +45,11 @@ $(document).ready(function () {
 
                     var gifDiv = $("<div>");
                     var rating = results[i].rating;
-                    var p = $("<p>").text("Rating: " + rating);
+                    var r = $("<p>").text(" Rating: " + rating);
+
+                    var title = results[i].title;
+                    var t = $("<h5>").text("Title: " + title);
+
                     var gifImage = $("<img>");
                     gifImage.attr("src", results[i].images.fixed_height_still.url);
                     console.log(results[i]);
@@ -53,7 +57,10 @@ $(document).ready(function () {
                     gifImage.attr("data-animate", results[i].images.fixed_height.url);
                     gifImage.attr("data-state", "still");
                     gifImage.attr("class", "image");
-                    gifDiv.prepend(p);
+                    
+                    gifDiv.prepend(r);
+                    gifDiv.prepend(t);
+                    
                     gifDiv.prepend(gifImage);
                     $("#giphy-area").prepend(gifDiv);
                 }
