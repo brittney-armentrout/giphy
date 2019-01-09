@@ -1,6 +1,6 @@
 //Initialize Variables
 var topics = ["birds", "cats", "dogs", "hedgehogs", "narwhals", "snakes", "lions", "pikachu", "monster", "taco", "nachos", 
-            "sunshine", "skiing", "music", "dance", "waterfall"];
+            "sunshine", "skiing", "music", "dance", "waterfall", "maple bacon"];
 
 
 $(document).ready(function () {
