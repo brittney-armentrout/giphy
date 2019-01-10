@@ -15,9 +15,12 @@ body {
     color: white;
 }
 
+#gif-input {
+    margin: 10px;
+}
+
 button {
     margin: 10px;
-
 }
 
 #giphy-area {

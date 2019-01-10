@@ -1,10 +1,12 @@
 //Initialize Variables
-var topics = ["birds", "cats", "dogs", "hedgehogs", "narwhals", "snakes", "lions", "pikachu", "monster", "taco", "nachos", 
-            "sunshine", "skiing", "music", "dance", "waterfall", "maple bacon"];
+var topics = ["cats", "dogs", "hedgehogs", "narwhals", "snakes", "lions", "pikachu", "monster", "taco", "nachos",
+    "sunshine", "skiing", "music", "dance", "waterfall", "maple", "milkshakes", "funk"
+];
 
 
 $(document).ready(function () {
-
+    
+    //Using topics array, create pre-loaded buttons 
     function renderButtons() {
         $("#button-area").empty();
 
@@ -17,22 +19,31 @@ $(document).ready(function () {
         };
     };
 
-    $("#add-gif").on("click", function (event) {
+    //Use .on("click") function to trigger the AJAX call
+    $("#add-gif").on("click", function(event) {
 
+        //this prevents the event from trying to submit itself
         event.preventDefault();
+
+        //Grab the text from the input box
         var gif = $("#gif-input").val().trim();
-        // Adding subject from the textbox to our array
+        //Add subject from the textbox to our array
         topics.push(gif);
 
+        //Call renderButtons function to re-create the buttons from array
         renderButtons();
     });
 
+    //Using GIPHY API, display GIFs from button clicks
     function displayGifs() {
 
+        //Construct URL, with limit of 10
         var gifName = $(this).attr("data-name");
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
             gifName + "&api_key=k7CBQf6b6cm7pL4RJkBQlizNk5kPP0Px&limit=10";
 
+        //Creating AJAX call for the specific button being clicked, include the parameters 'rating' and 'title'
+        //GIF should start out in static state. On cick, GIF will play. On click, GIF will go static again    
         $.ajax({
                 url: queryURL,
                 method: "GET"
@@ -57,14 +68,15 @@ $(document).ready(function () {
                     gifImage.attr("data-animate", results[i].images.fixed_height.url);
                     gifImage.attr("data-state", "still");
                     gifImage.attr("class", "image");
-                    
+
                     gifDiv.prepend(r);
                     gifDiv.prepend(t);
-                    
+
                     gifDiv.prepend(gifImage);
                     $("#giphy-area").prepend(gifDiv);
                 }
 
+                //Click function to animate or stop the GIF
                 $(".image").on("click", function () {
 
 
@@ -83,7 +95,7 @@ $(document).ready(function () {
 
     };
 
-
+    //Using .on Click to call displayGifs function and calling renderButtons function
     $(document).on("click", ".gif", displayGifs);
 
     renderButtons();
